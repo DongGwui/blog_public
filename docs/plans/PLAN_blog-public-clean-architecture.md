@@ -530,7 +530,7 @@ npm run build
 
 ### Phase 5: Blog Pages (Design System 적용)
 **Goal**: 블로그 목록, 상세, 카테고리/태그 페이지 구현 (Editorial Minimalist 디자인)
-**Status**: Pending
+**Status**: ✅ Completed
 
 > **Design Reference**: [DESIGN_SYSTEM.md](../DESIGN_SYSTEM.md)
 
@@ -947,11 +947,11 @@ npx lighthouse http://localhost:3000 --output=json
 - **Phase 2**: ✅ 100% - Domain Layer & Application Layer
 - **Phase 3**: ✅ 100% - Infrastructure Layer (API Integration)
 - **Phase 4**: ✅ 100% - Layout & Common Components (Design System)
-- **Phase 5**: ⏳ 0%
+- **Phase 5**: ✅ 100% - Blog Pages (Design System 적용)
 - **Phase 6**: ⏳ 0%
 - **Phase 7**: ⏳ 0%
 
-**Overall Progress**: 57% complete (4/7 phases)
+**Overall Progress**: 71% complete (5/7 phases)
 
 ---
 
@@ -962,6 +962,7 @@ npx lighthouse http://localhost:3000 --output=json
 - **Phase 2** (2026-01-01): Repository 인터페이스 정의, DTOs 구현, Use Cases 구현 (Posts, Projects, Categories, Tags), 83개 테스트 통과
 - **Phase 3** (2026-01-01): API Client 구현 (axios), Repository 구현체, TanStack Query 훅, QueryProvider 설정, 105개 테스트 통과
 - **Phase 4** (2026-01-01): ThemeProvider 구현, Header/Footer 레이아웃, 공통 컴포넌트 (ThemeToggle, Pagination, Tag, SearchBar, Skeleton), Root Layout 구성
+- **Phase 5** (2026-01-01): PostCard, PostHeader, PostContent, PostTOC, PostNav 컴포넌트 구현, 블로그 목록/상세/카테고리/태그 페이지 구현, Loading 상태 스켈레톤 추가
 
 ### Blockers Encountered
 - TypeScript tsc 모듈 오류 → node_modules 재설치로 해결
@@ -1003,5 +1004,5 @@ npx lighthouse http://localhost:3000 --output=json
 ---
 
 **Plan Status**: 🔄 In Progress
-**Next Action**: Phase 5 시작 - Blog Pages (Design System 적용)
+**Next Action**: Phase 6 시작 - Home, Search & Project Pages (Design System 적용)
 **Blocked By**: None
