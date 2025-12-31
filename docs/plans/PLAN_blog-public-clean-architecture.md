@@ -378,7 +378,7 @@ npm run lint
 
 ### Phase 4: Layout & Common Components (Design System 적용)
 **Goal**: Editorial Minimalist 디자인 시스템 적용, 기본 레이아웃과 다크모드, 공통 컴포넌트 구현
-**Status**: Pending
+**Status**: ✅ Completed
 
 > **Design Reference**: [DESIGN_SYSTEM.md](../DESIGN_SYSTEM.md)
 
@@ -946,12 +946,12 @@ npx lighthouse http://localhost:3000 --output=json
 - **Phase 1**: ✅ 100% - Project Initialization & Clean Architecture Foundation
 - **Phase 2**: ✅ 100% - Domain Layer & Application Layer
 - **Phase 3**: ✅ 100% - Infrastructure Layer (API Integration)
-- **Phase 4**: ⏳ 0%
+- **Phase 4**: ✅ 100% - Layout & Common Components (Design System)
 - **Phase 5**: ⏳ 0%
 - **Phase 6**: ⏳ 0%
 - **Phase 7**: ⏳ 0%
 
-**Overall Progress**: 43% complete (3/7 phases)
+**Overall Progress**: 57% complete (4/7 phases)
 
 ---
 
@@ -961,6 +961,7 @@ npx lighthouse http://localhost:3000 --output=json
 - **Phase 1** (2026-01-01): Next.js 14 프로젝트 생성, 클린 아키텍처 디렉토리 구조 설정, Domain Entities 정의, 47개 단위 테스트 작성
 - **Phase 2** (2026-01-01): Repository 인터페이스 정의, DTOs 구현, Use Cases 구현 (Posts, Projects, Categories, Tags), 83개 테스트 통과
 - **Phase 3** (2026-01-01): API Client 구현 (axios), Repository 구현체, TanStack Query 훅, QueryProvider 설정, 105개 테스트 통과
+- **Phase 4** (2026-01-01): ThemeProvider 구현, Header/Footer 레이아웃, 공통 컴포넌트 (ThemeToggle, Pagination, Tag, SearchBar, Skeleton), Root Layout 구성
 
 ### Blockers Encountered
 - TypeScript tsc 모듈 오류 → node_modules 재설치로 해결
@@ -1002,5 +1003,5 @@ npx lighthouse http://localhost:3000 --output=json
 ---
 
 **Plan Status**: 🔄 In Progress
-**Next Action**: Phase 4 시작 - Layout & Common Components (Design System 적용)
+**Next Action**: Phase 5 시작 - Blog Pages (Design System 적용)
 **Blocked By**: None
