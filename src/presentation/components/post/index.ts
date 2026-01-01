@@ -17,3 +17,6 @@ export type { PostTOCProps } from './PostTOC';
 
 export { PostNav } from './PostNav';
 export type { PostNavProps } from './PostNav';
+
+export { PostComments } from './PostComments';
+export type { PostCommentsProps } from './PostComments';

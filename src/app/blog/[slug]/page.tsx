@@ -13,6 +13,7 @@ import {
   PostContent,
   PostTOC,
   PostNav,
+  PostComments,
 } from '@/presentation/components/post';
 
 export const dynamic = 'force-dynamic';
@@ -84,6 +85,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               nextPost={post.next_post}
               className="mt-16 pt-8 border-t border-border-primary"
             />
+
+            {/* Comments */}
+            <PostComments className="mt-16 pt-8 border-t border-border-primary" />
           </article>
 
           {/* Sidebar - TOC */}
