@@ -61,7 +61,7 @@ export function PostHeader({ post, className = '' }: PostHeaderProps) {
       </div>
 
       {/* Tags */}
-      {post.tags.length > 0 && (
+      {post.tags && post.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
             <Link
