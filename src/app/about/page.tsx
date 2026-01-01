@@ -49,7 +49,7 @@ function getSocialLinks(): SocialLink[] {
 
 const skills = [
   { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'] },
-  { category: 'Backend', items: ['Node.js', 'Python', 'Go', 'PostgreSQL'] },
+  { category: 'Backend', items: ['Node.js', 'Go', 'Kotlin', 'PostgreSQL', 'MongoDB'] },
   { category: 'DevOps', items: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'] },
   { category: 'Tools', items: ['Git', 'VS Code', 'Figma', 'Notion'] },
 ];
