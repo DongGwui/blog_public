@@ -4,20 +4,35 @@
  */
 
 import Link from 'next/link';
-import { Github, Mail } from 'lucide-react';
+import { Github, Mail, LucideIcon } from 'lucide-react';
 
-const SOCIAL_LINKS = [
-  {
-    label: 'GitHub',
-    href: 'https://github.com',
-    icon: Github,
-  },
-  {
-    label: 'Email',
-    href: 'mailto:contact@example.com',
-    icon: Mail,
-  },
-];
+interface SocialLink {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+function getSocialLinks(): SocialLink[] {
+  const links: SocialLink[] = [];
+
+  if (process.env.NEXT_PUBLIC_GITHUB_URL) {
+    links.push({
+      label: 'GitHub',
+      href: process.env.NEXT_PUBLIC_GITHUB_URL,
+      icon: Github,
+    });
+  }
+
+  if (process.env.NEXT_PUBLIC_EMAIL) {
+    links.push({
+      label: 'Email',
+      href: `mailto:${process.env.NEXT_PUBLIC_EMAIL}`,
+      icon: Mail,
+    });
+  }
+
+  return links;
+}
 
 const FOOTER_LINKS = [
   { label: 'Blog', href: '/blog' },
@@ -27,6 +42,8 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Blog';
+  const socialLinks = getSocialLinks();
 
   return (
     <footer className="border-t border-border-primary bg-bg-primary">
@@ -46,26 +63,28 @@ export function Footer() {
           </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4">
-            {SOCIAL_LINKS.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-text-tertiary hover:text-text-primary transition-colors"
-                aria-label={social.label}
-              >
-                <social.icon className="w-5 h-5" />
-              </a>
-            ))}
-          </div>
+          {socialLinks.length > 0 && (
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-text-tertiary hover:text-text-primary transition-colors"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border-primary">
           <p className="text-sm text-text-tertiary text-center">
-            &copy; {currentYear} Blog. All rights reserved.
+            &copy; {currentYear} {siteName}. All rights reserved.
           </p>
         </div>
       </div>

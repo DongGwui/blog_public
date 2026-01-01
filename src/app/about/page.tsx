@@ -4,30 +4,48 @@
  */
 
 import type { Metadata } from 'next';
-import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, LucideIcon } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About',
   description: '블로그 소개 및 자기소개',
 };
 
-const socialLinks = [
-  {
-    name: 'GitHub',
-    href: 'https://github.com',
-    icon: Github,
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://linkedin.com',
-    icon: Linkedin,
-  },
-  {
-    name: 'Twitter',
-    href: 'https://twitter.com',
-    icon: Twitter,
-  },
-];
+interface SocialLink {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+function getSocialLinks(): SocialLink[] {
+  const links: SocialLink[] = [];
+
+  if (process.env.NEXT_PUBLIC_GITHUB_URL) {
+    links.push({
+      name: 'GitHub',
+      href: process.env.NEXT_PUBLIC_GITHUB_URL,
+      icon: Github,
+    });
+  }
+
+  if (process.env.NEXT_PUBLIC_LINKEDIN_URL) {
+    links.push({
+      name: 'LinkedIn',
+      href: process.env.NEXT_PUBLIC_LINKEDIN_URL,
+      icon: Linkedin,
+    });
+  }
+
+  if (process.env.NEXT_PUBLIC_TWITTER_URL) {
+    links.push({
+      name: 'Twitter',
+      href: process.env.NEXT_PUBLIC_TWITTER_URL,
+      icon: Twitter,
+    });
+  }
+
+  return links;
+}
 
 const skills = [
   { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'] },
@@ -35,6 +53,53 @@ const skills = [
   { category: 'DevOps', items: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'] },
   { category: 'Tools', items: ['Git', 'VS Code', 'Figma', 'Notion'] },
 ];
+
+function ContactSection() {
+  const email = process.env.NEXT_PUBLIC_EMAIL;
+  const socialLinks = getSocialLinks();
+
+  if (!email && socialLinks.length === 0) {
+    return null;
+  }
+
+  return (
+    <section>
+      <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
+        Contact
+      </h2>
+      <div className="space-y-4">
+        {/* Email */}
+        {email && (
+          <a
+            href={`mailto:${email}`}
+            className="flex items-center gap-3 text-text-secondary hover:text-accent-primary transition-colors"
+          >
+            <Mail className="w-5 h-5" />
+            <span>{email}</span>
+          </a>
+        )}
+
+        {/* Social Links */}
+        {socialLinks.length > 0 && (
+          <div className="flex gap-4 pt-4">
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-text-secondary hover:text-accent-primary transition-colors"
+                aria-label={link.name}
+              >
+                <link.icon className="w-6 h-6" />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -97,37 +162,7 @@ export default function AboutPage() {
         </section>
 
         {/* Contact Section */}
-        <section>
-          <h2 className="font-heading text-2xl font-semibold text-text-primary mb-6">
-            Contact
-          </h2>
-          <div className="space-y-4">
-            {/* Email */}
-            <a
-              href="mailto:hello@example.com"
-              className="flex items-center gap-3 text-text-secondary hover:text-accent-primary transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              <span>hello@example.com</span>
-            </a>
-
-            {/* Social Links */}
-            <div className="flex gap-4 pt-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 text-text-secondary hover:text-accent-primary transition-colors"
-                  aria-label={link.name}
-                >
-                  <link.icon className="w-6 h-6" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ContactSection />
       </div>
     </div>
   );
