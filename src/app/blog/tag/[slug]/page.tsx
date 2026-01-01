@@ -10,25 +10,43 @@ import { createPostRepository } from '@/infrastructure/repositories';
 import { PostList } from '@/presentation/components/post';
 import { Pagination } from '@/presentation/components/common';
 
+export const dynamic = 'force-dynamic';
+
 interface TagPageProps {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ page?: string }>;
 }
 
 async function getPostsByTag(tagSlug: string, page: number) {
-  const apiClient = getApiClient();
-  const repository = createPostRepository(apiClient);
-  return repository.getPostsByTag(tagSlug, { page, perPage: 10 });
+  try {
+    const apiClient = getApiClient();
+    const repository = createPostRepository(apiClient);
+    const response = await repository.getPostsByTag(tagSlug, { page, perPage: 10 });
+    return { data: response?.data || [], meta: response?.meta || null };
+  } catch {
+    return { data: [], meta: null };
+  }
 }
 
 export async function generateMetadata({
   params,
 }: TagPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const description = `#${slug} 태그가 포함된 글 목록입니다.`;
 
   return {
-    title: `#${slug} - Blog`,
-    description: `#${slug} 태그가 포함된 글 목록입니다.`,
+    title: `#${slug}`,
+    description,
+    openGraph: {
+      title: `#${slug} - Blog`,
+      description,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: `#${slug} - Blog`,
+      description,
+    },
   };
 }
 

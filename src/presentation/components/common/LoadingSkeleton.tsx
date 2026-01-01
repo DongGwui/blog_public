@@ -94,6 +94,30 @@ export function ProjectGridSkeleton({ count = 6 }: { count?: number }) {
   );
 }
 
+export type SkeletonType = 'post-card' | 'post-list' | 'post-detail' | 'project-card' | 'project-grid';
+
+export interface LoadingSkeletonProps {
+  type: SkeletonType;
+  count?: number;
+}
+
+export function LoadingSkeleton({ type, count }: LoadingSkeletonProps) {
+  switch (type) {
+    case 'post-card':
+      return <PostCardSkeleton />;
+    case 'post-list':
+      return <PostListSkeleton count={count} />;
+    case 'post-detail':
+      return <PostDetailSkeleton />;
+    case 'project-card':
+      return <ProjectCardSkeleton />;
+    case 'project-grid':
+      return <ProjectGridSkeleton count={count} />;
+    default:
+      return null;
+  }
+}
+
 export function PostDetailSkeleton() {
   return (
     <article className="max-w-3xl mx-auto animate-fade-in-up">

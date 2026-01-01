@@ -25,5 +25,6 @@ export {
   ProjectCardSkeleton,
   ProjectGridSkeleton,
   PostDetailSkeleton,
+  LoadingSkeleton,
 } from './LoadingSkeleton';
-export type { SkeletonProps } from './LoadingSkeleton';
+export type { SkeletonProps, LoadingSkeletonProps, SkeletonType } from './LoadingSkeleton';

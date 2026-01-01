@@ -5,25 +5,55 @@ import './globals.css';
 import { ThemeProvider, QueryProvider } from '@/presentation/providers';
 import { Header, Footer } from '@/presentation/components/layout';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://blog.example.com';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Blog';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: 'Blog',
-    template: '%s | Blog',
+    default: siteName,
+    template: `%s | ${siteName}`,
   },
   description: '개발 블로그 - 기술, 프로젝트, 그리고 생각을 공유합니다.',
   keywords: ['블로그', '개발', '프로그래밍', 'TypeScript', 'React', 'Next.js'],
   authors: [{ name: 'Blog Author' }],
+  creator: 'Blog Author',
+  publisher: siteName,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    siteName: 'Blog',
+    url: siteUrl,
+    siteName: siteName,
+    title: siteName,
+    description: '개발 블로그 - 기술, 프로젝트, 그리고 생각을 공유합니다.',
   },
   twitter: {
     card: 'summary_large_image',
+    title: siteName,
+    description: '개발 블로그 - 기술, 프로젝트, 그리고 생각을 공유합니다.',
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    // google: 'your-google-verification-code',
+    // naver: 'your-naver-verification-code',
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 };
 

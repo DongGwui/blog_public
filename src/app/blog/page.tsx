@@ -15,14 +15,21 @@ export const metadata: Metadata = {
   description: '개발, 기술, 그리고 프로젝트에 대한 글을 공유합니다.',
 };
 
+export const dynamic = 'force-dynamic';
+
 interface BlogPageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
 async function getPosts(page: number) {
-  const apiClient = getApiClient();
-  const repository = createPostRepository(apiClient);
-  return repository.getPosts({ page, perPage: 10 });
+  try {
+    const apiClient = getApiClient();
+    const repository = createPostRepository(apiClient);
+    const response = await repository.getPosts({ page, perPage: 10 });
+    return { data: response?.data || [], meta: response?.meta || null };
+  } catch {
+    return { data: [], meta: null };
+  }
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

@@ -15,6 +15,8 @@ import {
   PostNav,
 } from '@/presentation/components/post';
 
+export const dynamic = 'force-dynamic';
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }

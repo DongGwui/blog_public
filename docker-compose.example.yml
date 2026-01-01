@@ -1,0 +1,19 @@
+# Docker Compose Example for Blog Public
+# Copy this file to docker-compose.yml and modify for your environment
+# docker-compose.yml is excluded from git for security
+
+ services:
+   blog-public:
+     build:
+       context: .
+       dockerfile: Dockerfile
+       args:
+         - NEXT_PUBLIC_API_URL=https://your-api-domain.com/api/public
+         - NEXT_PUBLIC_SITE_URL=http://localhost:3000
+         - NEXT_PUBLIC_SITE_NAME=Your Blog Name
+     container_name: blog-public
+     restart: unless-stopped
+     ports:
+       - "3000:3000"
+     environment:
+       - NODE_ENV=production

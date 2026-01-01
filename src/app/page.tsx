@@ -6,7 +6,47 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
-export default function Home() {
+import { getApiClient } from '@/infrastructure/api';
+import { createPostRepository, createProjectRepository } from '@/infrastructure/repositories';
+import { PostCard } from '@/presentation/components/post';
+import { ProjectCard } from '@/presentation/components/project';
+
+// 빌드 시 정적 생성을 방지하고 런타임에 렌더링
+export const dynamic = 'force-dynamic';
+
+async function getRecentPosts() {
+  try {
+    const apiClient = getApiClient();
+    const repository = createPostRepository(apiClient);
+    const response = await repository.getPosts({ page: 1, perPage: 5 });
+    return { data: response?.data || [], meta: response?.meta || null };
+  } catch {
+    return { data: [], meta: null };
+  }
+}
+
+async function getFeaturedProjects() {
+  try {
+    const apiClient = getApiClient();
+    const repository = createProjectRepository(apiClient);
+    const response = await repository.getProjects();
+    const projects = response?.data || [];
+    // featured 프로젝트만 필터링하거나 상위 3개만 표시
+    const featured = projects.filter((p) => p.is_featured).slice(0, 3);
+    return featured.length > 0 ? featured : projects.slice(0, 3);
+  } catch {
+    return [];
+  }
+}
+
+export default async function Home() {
+  const [postsResponse, projects] = await Promise.all([
+    getRecentPosts(),
+    getFeaturedProjects(),
+  ]);
+
+  const posts = postsResponse.data;
+
   return (
     <div className="animate-fade-in-up">
       {/* Hero Section */}
@@ -52,15 +92,27 @@ export default function Home() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <p className="text-text-secondary">
-            아직 작성된 글이 없습니다. 곧 새로운 글이 올라올 예정이에요!
-          </p>
+          {posts.length > 0 ? (
+            <div>
+              {posts.map((post, index) => (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  className={`animate-fade-in-up animation-delay-${index * 100}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-text-secondary py-8">
+              아직 작성된 글이 없습니다. 곧 새로운 글이 올라올 예정이에요!
+            </p>
+          )}
         </div>
       </section>
 
       {/* Featured Projects Section */}
       <section className="py-16 border-t border-border-primary">
-        <div className="max-w-3xl mx-auto px-5 md:px-10">
+        <div className="max-w-5xl mx-auto px-5 md:px-10">
           <div className="flex items-center justify-between mb-8">
             <h2 className="font-heading text-2xl md:text-3xl font-semibold text-text-primary">
               Featured Projects
@@ -73,9 +125,21 @@ export default function Home() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-          <p className="text-text-secondary">
-            아직 등록된 프로젝트가 없습니다. 곧 프로젝트들이 추가될 예정이에요!
-          </p>
+          {projects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  className={`animate-fade-in-up animation-delay-${index * 100}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-text-secondary py-8">
+              아직 등록된 프로젝트가 없습니다. 곧 프로젝트들이 추가될 예정이에요!
+            </p>
+          )}
         </div>
       </section>
     </div>

@@ -8,7 +8,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { ThemeToggle } from '@/presentation/components/common';
 
@@ -29,6 +29,23 @@ export function Header() {
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
   }, []);
+
+  // 모바일 메뉴 열렸을 때 스크롤 잠금
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // 페이지 이동 시 메뉴 닫기
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname, closeMobileMenu]);
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -91,33 +108,80 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border-primary bg-bg-primary">
-          <nav className="max-w-5xl mx-auto px-5 py-4">
-            <ul className="space-y-1">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={closeMobileMenu}
-                    className={`
-                      block px-4 py-3 rounded-lg transition-colors
-                      ${
-                        isActive(item.href)
-                          ? 'bg-bg-secondary text-text-primary font-medium'
-                          : 'text-text-secondary hover:bg-bg-secondary hover:text-text-primary'
-                      }
-                    `}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      {/* Mobile Navigation Overlay */}
+      <div
+        className={`
+          fixed inset-0 bg-black/50 z-40 md:hidden
+          transition-opacity duration-300
+          ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+        `}
+        onClick={closeMobileMenu}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Navigation Panel */}
+      <div
+        className={`
+          fixed top-0 right-0 bottom-0 w-72 max-w-[80vw] bg-bg-primary z-50 md:hidden
+          transform transition-transform duration-300 ease-out
+          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+          shadow-2xl
+        `}
+      >
+        {/* Close Button */}
+        <div className="flex items-center justify-between h-16 px-5 border-b border-border-primary">
+          <span className="font-heading text-lg font-semibold text-text-primary">
+            Menu
+          </span>
+          <button
+            type="button"
+            onClick={closeMobileMenu}
+            className="p-2 text-text-secondary hover:text-text-primary transition-colors"
+            aria-label="메뉴 닫기"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
-      )}
+
+        {/* Navigation Links */}
+        <nav className="px-4 py-6">
+          <ul className="space-y-2">
+            {NAV_ITEMS.map((item, index) => (
+              <li
+                key={item.href}
+                className={`
+                  transform transition-all duration-300
+                  ${isMobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}
+                `}
+                style={{ transitionDelay: isMobileMenuOpen ? `${index * 50}ms` : '0ms' }}
+              >
+                <Link
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className={`
+                    block px-4 py-3 rounded-lg transition-colors
+                    ${
+                      isActive(item.href)
+                        ? 'bg-accent-primary/10 text-accent-primary font-medium'
+                        : 'text-text-secondary hover:bg-bg-secondary hover:text-text-primary'
+                    }
+                  `}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Theme Toggle in Mobile Menu */}
+        <div className="absolute bottom-8 left-4 right-4 px-4 py-3 border-t border-border-primary">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-text-secondary">테마</span>
+            <ThemeToggle />
+          </div>
+        </div>
+      </div>
     </header>
   );
 }

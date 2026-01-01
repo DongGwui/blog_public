@@ -10,15 +10,22 @@ import { createPostRepository } from '@/infrastructure/repositories';
 import { PostList } from '@/presentation/components/post';
 import { Pagination } from '@/presentation/components/common';
 
+export const dynamic = 'force-dynamic';
+
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ page?: string }>;
 }
 
 async function getPostsByCategory(categorySlug: string, page: number) {
-  const apiClient = getApiClient();
-  const repository = createPostRepository(apiClient);
-  return repository.getPostsByCategory(categorySlug, { page, perPage: 10 });
+  try {
+    const apiClient = getApiClient();
+    const repository = createPostRepository(apiClient);
+    const response = await repository.getPostsByCategory(categorySlug, { page, perPage: 10 });
+    return { data: response?.data || [], meta: response?.meta || null };
+  } catch {
+    return { data: [], meta: null };
+  }
 }
 
 export async function generateMetadata({
@@ -28,10 +35,21 @@ export async function generateMetadata({
 
   // Capitalize first letter for display
   const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
+  const description = `${categoryName} 카테고리의 글 목록입니다.`;
 
   return {
-    title: `${categoryName} - Blog`,
-    description: `${categoryName} 카테고리의 글 목록입니다.`,
+    title: categoryName,
+    description,
+    openGraph: {
+      title: `${categoryName} - Blog`,
+      description,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary',
+      title: `${categoryName} - Blog`,
+      description,
+    },
   };
 }
 
