@@ -45,6 +45,7 @@ export async function generateMetadata({
   }
 
   const post = response.data;
+  const ogImage = post.thumbnail || '/og-image.png';
 
   return {
     title: post.title,
@@ -56,13 +57,13 @@ export async function generateMetadata({
       publishedTime: post.published_at || post.created_at,
       modifiedTime: post.updated_at || undefined,
       tags: post.tags?.map((tag) => tag.name) || [],
-      images: post.thumbnail ? [{ url: post.thumbnail, alt: post.title }] : undefined,
+      images: [{ url: ogImage, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: post.thumbnail ? [post.thumbnail] : undefined,
+      images: [ogImage],
     },
   };
 }
