@@ -31,11 +31,20 @@ export const metadata: Metadata = {
     siteName: siteName,
     title: siteName,
     description: '개발 블로그 - 기술, 프로젝트, 그리고 생각을 공유합니다.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: siteName,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteName,
     description: '개발 블로그 - 기술, 프로젝트, 그리고 생각을 공유합니다.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
