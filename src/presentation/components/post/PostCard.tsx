@@ -50,7 +50,7 @@ export function PostCard({ post, className = '' }: PostCardProps) {
       <div className="flex items-center justify-between">
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          {post.tags.slice(0, 3).map((tag) => (
+          {post.tags?.slice(0, 3).map((tag) => (
             <Link
               key={tag.slug}
               href={`/blog/tag/${tag.slug}`}
