@@ -4,7 +4,7 @@
  */
 
 import Link from 'next/link';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Coffee } from 'lucide-react';
 
 import type { PostListItem, TagBrief } from '@/domain/entities';
 
@@ -63,8 +63,8 @@ export function PostCard({ post, className = '' }: PostCardProps) {
 
         {/* Reading Time */}
         <div className="flex items-center gap-1 text-sm text-text-tertiary">
-          <Clock className="w-4 h-4" />
-          <span>{post.reading_time} min read</span>
+          <Coffee className="w-4 h-4" />
+          <span>{post.reading_time} min</span>
         </div>
       </div>
     </article>

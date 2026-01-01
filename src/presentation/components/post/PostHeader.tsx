@@ -4,7 +4,7 @@
  */
 
 import Link from 'next/link';
-import { Calendar, Clock, Eye } from 'lucide-react';
+import { Calendar, Coffee, Eye } from 'lucide-react';
 
 import type { Post } from '@/domain/entities';
 
@@ -50,8 +50,8 @@ export function PostHeader({ post, className = '' }: PostHeaderProps) {
         </div>
 
         <div className="flex items-center gap-1.5">
-          <Clock className="w-4 h-4" />
-          <span>{post.reading_time} min read</span>
+          <Coffee className="w-4 h-4" />
+          <span>{post.reading_time} min</span>
         </div>
 
         <div className="flex items-center gap-1.5">
