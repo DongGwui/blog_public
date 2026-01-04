@@ -17,6 +17,8 @@ describe('GetPost Use Case', () => {
     view_count: 100,
     reading_time: 5,
     thumbnail: null,
+    thumbnail_sm: null,
+    thumbnail_md: null,
     tags: [{ id: 1, name: 'TypeScript', slug: 'typescript' }],
     prev_post: null,
     next_post: { title: 'Next Post', slug: 'next-post' },

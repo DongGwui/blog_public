@@ -17,6 +17,8 @@ describe('SearchPosts Use Case', () => {
       view_count: 100,
       reading_time: 10,
       thumbnail: null,
+      thumbnail_sm: null,
+      thumbnail_md: null,
       tags: [],
       created_at: '2024-01-15T00:00:00Z',
       published_at: '2024-01-15T00:00:00Z',

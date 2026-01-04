@@ -11,7 +11,7 @@ import { ArrowLeft, ExternalLink, Github, Calendar } from 'lucide-react';
 
 import { getApiClient } from '@/infrastructure/api';
 import { createProjectRepository } from '@/infrastructure/repositories';
-import { TechStack, ProjectLinks } from '@/presentation/components/project';
+import { PostContent } from '@/presentation/components/post';
 
 export const dynamic = 'force-dynamic';
 
@@ -91,21 +91,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </Link>
       </div>
 
-      {/* Hero Image */}
-      {project.thumbnail && (
-        <div className="max-w-5xl mx-auto px-5 md:px-10 mt-8">
-          <div className="aspect-video relative rounded-lg overflow-hidden">
-            <Image
-              src={project.thumbnail}
-              alt={project.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        </div>
-      )}
-
       {/* Content */}
       <div className="max-w-3xl mx-auto px-5 md:px-10 py-12">
         {/* Header */}
@@ -122,46 +107,67 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             </div>
           </div>
 
-          {/* Description */}
-          <p className="text-lg text-text-secondary mb-6">
-            {project.description}
-          </p>
+          {/* Properties (Notion Style) */}
+          <div className="space-y-3 text-sm">
+            {/* Description */}
+            <div className="flex items-start gap-4">
+              <span className="w-20 shrink-0 text-text-tertiary">Summary</span>
+              <p className="text-text-secondary leading-relaxed">
+                {project.description}
+              </p>
+            </div>
 
-          {/* Tech Stack */}
-          <TechStack techs={project.tech_stack} className="mb-6" />
+            {/* Tech Stack */}
+            <div className="flex items-start gap-4">
+              <span className="w-20 shrink-0 text-text-tertiary">Tech</span>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tech_stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2 py-0.5 text-xs text-text-secondary bg-bg-secondary rounded"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-          {/* Links */}
-          <div className="flex gap-4">
-            {project.demo_url && (
-              <a
-                href={project.demo_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-text-primary text-bg-primary font-medium rounded-lg hover:opacity-90 transition-opacity"
-              >
-                <ExternalLink className="w-4 h-4" />
-                Live Demo
-              </a>
-            )}
-            {project.github_url && (
-              <a
-                href={project.github_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 border border-border-secondary text-text-primary font-medium rounded-lg hover:border-text-primary transition-colors"
-              >
-                <Github className="w-4 h-4" />
-                Source Code
-              </a>
+            {/* Links */}
+            {(project.demo_url || project.github_url) && (
+              <div className="flex items-center gap-4">
+                <span className="w-20 shrink-0 text-text-tertiary">Links</span>
+                <div className="flex items-center gap-3">
+                  {project.demo_url && (
+                    <a
+                      href={project.demo_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary underline underline-offset-2 decoration-border-primary hover:decoration-text-primary transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      Demo
+                    </a>
+                  )}
+                  {project.github_url && (
+                    <a
+                      href={project.github_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-text-secondary hover:text-text-primary underline underline-offset-2 decoration-border-primary hover:decoration-text-primary transition-colors"
+                    >
+                      <Github className="w-3.5 h-3.5" />
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </header>
 
         {/* Content */}
         {project.content && (
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: project.content }} />
-          </div>
+          <PostContent content={project.content} />
         )}
 
         {/* Image Gallery */}

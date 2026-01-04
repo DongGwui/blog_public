@@ -13,6 +13,8 @@ export interface ProjectListItem {
   description: string;
   tech_stack: string[];
   thumbnail: string | null;
+  thumbnail_sm: string | null;  // 150px - 목록용
+  thumbnail_md: string | null;  // 400px - 본문용
   is_featured: boolean;
   sort_order: number;
 }

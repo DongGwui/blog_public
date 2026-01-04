@@ -12,6 +12,8 @@ describe('GetProject Use Case', () => {
     content: '<p>Full description of the blog project</p>',
     tech_stack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     thumbnail: '/images/blog.png',
+    thumbnail_sm: '/images/blog_sm.jpg',
+    thumbnail_md: '/images/blog_md.jpg',
     images: ['/images/blog-1.png', '/images/blog-2.png'],
     github_url: 'https://github.com/example/blog',
     demo_url: 'https://blog.example.com',

@@ -19,6 +19,8 @@ describe('Post Entity', () => {
     view_count: 100,
     reading_time: 5,
     thumbnail: 'https://example.com/image.jpg',
+    thumbnail_sm: 'https://example.com/image_sm.jpg',
+    thumbnail_md: 'https://example.com/image_md.jpg',
     tags: [
       { id: 1, name: 'TypeScript', slug: 'typescript' },
       { id: 2, name: 'React', slug: 'react' },

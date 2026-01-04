@@ -29,6 +29,8 @@ export interface PostListItem {
   view_count: number;
   reading_time: number;
   thumbnail: string | null;
+  thumbnail_sm: string | null;  // 150px - 목록용
+  thumbnail_md: string | null;  // 400px - 본문용
   tags: TagBrief[];
   created_at: string;
   published_at: string | null;

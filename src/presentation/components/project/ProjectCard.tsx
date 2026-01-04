@@ -15,15 +15,18 @@ export interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, className = '' }: ProjectCardProps) {
+  // 목록용 썸네일: thumbnail_sm > thumbnail 폴백
+  const thumbnailSrc = project.thumbnail_sm || project.thumbnail;
+
   return (
     <article
       className={`group bg-bg-secondary rounded-lg overflow-hidden border border-border-primary hover:border-border-secondary transition-all hover:-translate-y-1 hover:shadow-lg ${className}`}
     >
       {/* Thumbnail */}
       <Link href={`/projects/${project.slug}`} className="block aspect-video relative overflow-hidden">
-        {project.thumbnail ? (
+        {thumbnailSrc ? (
           <Image
-            src={project.thumbnail}
+            src={thumbnailSrc}
             alt={project.title}
             fill
             className="object-cover transition-transform group-hover:scale-105"

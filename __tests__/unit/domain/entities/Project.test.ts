@@ -13,6 +13,8 @@ describe('Project Entity', () => {
     description: 'A personal blog built with Next.js',
     tech_stack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     thumbnail: 'https://example.com/thumbnail.jpg',
+    thumbnail_sm: 'https://example.com/thumbnail_sm.jpg',
+    thumbnail_md: 'https://example.com/thumbnail_md.jpg',
     is_featured: true,
     sort_order: 1,
   };
