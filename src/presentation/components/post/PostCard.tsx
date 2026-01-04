@@ -27,10 +27,23 @@ export function PostCard({ post, className = '' }: PostCardProps) {
 
   return (
     <article className={`py-8 border-b border-border-primary ${className}`}>
-      {/* Date */}
-      <div className="flex items-center gap-2 text-sm text-text-tertiary mb-3">
-        <Calendar className="w-4 h-4" />
-        <time dateTime={displayDate}>{formatDate(displayDate)}</time>
+      {/* Category and Date */}
+      <div className="flex items-center gap-3 text-sm mb-3">
+        {post.category_name && post.category_slug && (
+          <>
+            <Link
+              href={`/blog/category/${post.category_slug}`}
+              className="font-medium text-accent-primary hover:text-accent-hover transition-colors"
+            >
+              {post.category_name}
+            </Link>
+            <span className="text-text-tertiary">·</span>
+          </>
+        )}
+        <div className="flex items-center gap-2 text-text-tertiary">
+          <Calendar className="w-4 h-4" />
+          <time dateTime={displayDate}>{formatDate(displayDate)}</time>
+        </div>
       </div>
 
       {/* Title */}
