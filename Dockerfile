@@ -1,10 +1,9 @@
 # Stage 1: Dependencies
 FROM node:20-alpine AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+RUN npm ci --only=production --os=linux --libc=musl
 
 # Stage 2: Builder
 FROM node:20-alpine AS builder
@@ -23,7 +22,7 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_NAME=$NEXT_PUBLIC_SITE_NAME
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npm ci && npm run build
+RUN npm ci --os=linux --libc=musl && npm run build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner
