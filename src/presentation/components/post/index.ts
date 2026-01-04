@@ -20,3 +20,6 @@ export type { PostNavProps } from './PostNav';
 
 export { PostComments } from './PostComments';
 export type { PostCommentsProps } from './PostComments';
+
+export { ViewCounter } from './ViewCounter';
+export type { ViewCounterProps } from './ViewCounter';

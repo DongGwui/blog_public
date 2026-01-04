@@ -14,6 +14,7 @@ import {
   PostTOC,
   PostNav,
   PostComments,
+  ViewCounter,
 } from '@/presentation/components/post';
 
 export const dynamic = 'force-dynamic';
@@ -80,6 +81,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="animate-fade-in-up">
+      {/* 조회수 증가 */}
+      <ViewCounter slug={slug} />
+
       <div className="max-w-5xl mx-auto px-5 md:px-10 py-16">
         <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-12">
           {/* Main Content */}
