@@ -14,6 +14,7 @@ import { ThemeToggle } from '@/presentation/components/common';
 
 const NAV_ITEMS = [
   { label: 'Blog', href: '/blog' },
+  { label: 'Categories', href: '/blog/categories' },
   { label: 'Projects', href: '/projects' },
   { label: 'About', href: '/about' },
 ];
@@ -49,6 +50,8 @@ export function Header() {
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
+    // /blog/categories는 Categories 메뉴만 활성화
+    if (href === '/blog' && pathname.startsWith('/blog/categories')) return false;
     return pathname.startsWith(href);
   };
 

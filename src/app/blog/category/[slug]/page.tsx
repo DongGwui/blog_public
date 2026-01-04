@@ -33,8 +33,13 @@ export async function generateMetadata({
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  // Capitalize first letter for display
-  const categoryName = slug.charAt(0).toUpperCase() + slug.slice(1);
+  // Get actual category name from posts
+  const { data: posts } = await getPostsByCategory(slug, 1);
+  const categoryName =
+    posts.length > 0 && posts[0].category_name
+      ? posts[0].category_name
+      : slug.charAt(0).toUpperCase() + slug.slice(1);
+
   const description = `${categoryName} 카테고리의 글 목록입니다.`;
 
   return {
