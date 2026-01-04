@@ -37,7 +37,7 @@ export function PostComments({ className = '' }: PostCommentsProps) {
         strict="0"
         reactionsEnabled="0"
         emitMetadata="0"
-        inputPosition="top"
+        inputPosition="bottom"
         theme={resolvedTheme === 'dark' ? 'noborder_dark' : 'noborder_light'}
         lang="ko"
         loading="lazy"
